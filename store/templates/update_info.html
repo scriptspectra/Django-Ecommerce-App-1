@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-lg-4 col-md-8"><br><br>
+                <strong>Billing Information</strong><br/><br/>
+                <form method="POST" action="{% url 'update_info' %}">
+
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <br/><br/>
+                    <strong>Shipping Information</strong>
+                    <br/><br/>
+                    
+                    {{ shipping_form.as_p }}
+
+                    <br/><br/>
+                    <button type="submit" class="btn btn-secondary">Update Profile</button>
+                  </form>
+                  <br>
+                  <a href="{% url 'update_info' %}" class="btn btn-success">Update Password</a>
+                <br/><br/>
+                <br/><br/>               
+            </div>
+        </center>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Search Products</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Your One-Stop Shop for Everything You Love!</p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-md-8 col-lg-6">
+                <p align="justify">
+                    <br/><br/><br/><br/>
+                    <form method="POST" action="{% url 'search' %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="search" name="searched" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
+                            <button type="submit" class="btn btn-outline-secondary" data-mdb-ripple-init>search</button>
+                        </div> 
+                    </form>
+                    
+                </p>
+            </div>
+            
+            {% if searched %}
+                <div class="container px-4 px-lg-5 mt-5">
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for product in searched %}
+            {% if product.is_sale == True %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <div class="badge bg-warning text-black position-absolute" style="top:0.5rem; right:0.5rem;">Sale</div>
+                    <!-- Product image-->
+                    <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            <!--Sale-->
+                            <div class="d-flex justify-content-center small text-warning mb-2">
+                                <div class="bi-star-fill"></div>
+                                &nbsp;&nbsp;Sale!&nbsp;&nbsp;
+                                <div class="bi-star-fill"></div>
+                            </div>
+                            <!-- Product price-->
+                            <strike>{{ product.price }}$</strike> &nbsp
+                            {{ product.sale_price }}$
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.id %}">View Product</a></div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" src="{{ product.image.url }}" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            <!-- Product price-->
+                            {{ product.price }}$
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product' product.id %}">View Product</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+            {% else %}
+            <br>
+            <div class="col-lg-6 col-md-8">
+                <div class="card text-center">
+                    <div class="card-header">
+                      Sorry! That product does not exist...
+                    </div>
+                    <div class="card-body">
+                        <i class="fa-solid fa-circle-exclamation fa-3x"></i><br/>
+                      <h5 class="card-title">Oops! It looks like the product you searched does not exist..</h5>
+                      <p class="card-text">Please try again later...</p>
+                    </div>
+                </div>    
+            </div>            <br/><br/><br/><br/><br/>
+            {% endif %}
+        </div>
+        </center>
+    </div>
+</div>
+
+<script>
+    // Initialization for ES Users
+    import { Ripple, initMDB } from "mdb-ui-kit";
+
+    initMDB({ Ripple });
+</script>
+{% endblock %}
