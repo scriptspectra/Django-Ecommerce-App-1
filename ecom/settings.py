@@ -17,12 +17,19 @@ DB_PASSWORD_YO = os.environ['DB_PASSWORD_YO']
 SECRET_KEY = 'django-insecure-u6m!zf4_33nk06$^&@ncp2u+3lj_rw@$f$e4vs8)2792&09g&$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
+<<<<<<< HEAD
     'django-ecommerce-app-1-production.up.railway.app',
     'https://django-ecommerce-app-1-production.up.railway.app',
     'localhost',
+=======
+    'django-ecommerce-app-1-production-946d.up.railway.app',
+    'https://django-ecommerce-app-1-production-946d.up.railway.app',
+#    'localhost',
+    '127.0.0.1',
+>>>>>>> 78e775221f7d99ffd42b4fc5cbf29e4b5f20b76a
     '3649-112-134-155-87.ngrok-free.app',
     ]
 CSRF_TRUSTED_ORIGINS = [
