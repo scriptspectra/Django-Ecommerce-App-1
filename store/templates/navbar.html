@@ -34,10 +34,11 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'shipped_dash' %}">Admin Dashboard</a></li>
                 {% endif %}
 
+
             </ul>
-            <form class="d-flex">
-                <a href="{% url 'cart_summary' %}" style="text-decoration: none; color: white;">
-                    <button class="btn btn-outline-dark" type="submit">
+            
+                <a href="{% url 'cart_summary' %}" style="text-decoration: none; color: white;" class="text-white">
+                    <button class="btn btn-outline-dark text-white">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
                         <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart_quantity">
@@ -45,7 +46,7 @@
                         </span>
                     </button>
                 </a>
-            </form>
+            
         </div>
     </div>
 </nav>
