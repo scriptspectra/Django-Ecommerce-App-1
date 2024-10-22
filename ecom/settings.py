@@ -20,11 +20,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'django-ecommerce-app-1-production.up.railway.app',
-    'https://django-ecommerce-app-1-production.up.railway.app',
+    'https://django-ecommerce-app-1-production.up.railway.app'
     ]
 CSRF_TRUSTED_ORIGINS = [
-    'django-ecommerce-app-1-production.up.railway.app',
-    'https://django-ecommerce-app-1-production.up.railway.app',
+    'https://django-ecommerce-app-1-production.up.railway.app'
 ]
 
 
