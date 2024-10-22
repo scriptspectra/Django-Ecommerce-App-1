@@ -7,6 +7,11 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from store.models import Product, Profile
 import datetime
+# Import some paypal stuff
+from django.urls import reverse
+from paypal.standard.forms import PayPalPaymentsForm
+from django.conf import settings
+import uuid # unique user id for duplicate orders
 
 # Create your views here.
 def orders(request, pk):
@@ -93,33 +98,55 @@ def shipped_dash(request):
 def payment_success(request):
     return render(request, "payments/payment_success.html", {})
 
+def payment_failed(request):
+    return render(request, "payments/payment_failed.html", {})
+
 def billing_info(request):
-	if request.POST:
+    if request.POST:
 		#get the cart
-		cart = Cart(request)
-		cart_products = cart.get_prods
-		quantites = cart.get_quants
-		totals = cart.cart_total()
+        cart = Cart(request)
+        cart_products = cart.get_prods
+        quantites = cart.get_quants
+        totals = cart.cart_total()
           
 		#create a session with shipping info
-		my_shipping = request.POST
-		request.session['my_shipping'] = my_shipping
+        my_shipping = request.POST
+        request.session['my_shipping'] = my_shipping
+          
+        # Get the host
+        host = request.get_host()
+
+        # Create paypal form dictionary
+        paypal_dict = {
+            'business': settings.PAYPAL_RECEIVER_EMAIL,
+            'amount': totals,
+            'item_name': 'Order',
+            'no_shipping': '2',
+            'invoice': str(uuid.uuid4()),
+            'currency_code': 'USD',
+            'notify_url': 'https://{}{}'.format(host, reverse("paypal-ipn")),
+            'return_url': 'https://{}{}'.format(host, reverse("payment_success")),
+            'cancel_return': 'https://{}{}'.format(host, reverse("payment_failed"))
+        }
+
+        # Create actual paypal form
+        paypal_form = PayPalPaymentsForm(initial=paypal_dict)
 
 		#check to see if the user is logged-in
-		if request.user.is_authenticated:
+        if request.user.is_authenticated:
 			# if logged-in
-			billing_form = PaymentForm()
-			return render(request, "payments/billing_info.html", {"cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
-		else:
+            billing_form = PaymentForm()
+            return render(request, "payments/billing_info.html", {"paypal_form":paypal_form, "cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
+        else:
 			# if not logged-in
-			billing_form = PaymentForm()
-			return render(request, "payments/billing_info.html", {"cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
+            billing_form = PaymentForm()
+            return render(request, "payments/billing_info.html", {"paypal_form":paypal_form, "cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
 
-		shipping_form = request.POST
-		return render(request, "payments/billing_info.html", {"cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
-	else:
-		messages.success(request, "Access Denied!")
-		return redirect('home')
+        shipping_form = request.POST
+        return render(request, "payments/billing_info.html", {"cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
+    else:
+        messages.success(request, "Access Denied!")
+        return redirect('home')
 
 def process_order(request):
     if request.POST:

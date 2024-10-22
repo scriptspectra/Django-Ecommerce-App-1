@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load our environmental variables
-load_dotenv()
+#load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'store',
     'cart',
     'payments',
-    'whitenoise.runserver_nostatic'
+    'whitenoise.runserver_nostatic',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Add paypal settings
+# Set sandbox to true
+PAYPAL_TEST = True
+
+# Sandbox business account
+PAYPAL_RECEIVER_EMAIL = 'business@codemytest1234.com'
