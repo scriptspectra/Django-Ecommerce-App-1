@@ -20,13 +20,13 @@ SECRET_KEY = 'django-insecure-u6m!zf4_33nk06$^&@ncp2u+3lj_rw@$f$e4vs8)2792&09g&$
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'django-ecommerce-app-1-production-946d.up.railway.app',
-    'https://django-ecommerce-app-1-production-946d.up.railway.app',
+    'django-ecommerce-app-1-production.up.railway.app',
+    'https://django-ecommerce-app-1-production.up.railway.app',
     'localhost',
     '3649-112-134-155-87.ngrok-free.app',
     ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://django-ecommerce-app-1-production-946d.up.railway.app',
+    'https://django-ecommerce-app-1-production.up.railway.app',
     'https://3649-112-134-155-87.ngrok-free.app',
 ]
 
