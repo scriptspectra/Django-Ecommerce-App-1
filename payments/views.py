@@ -264,8 +264,8 @@ def checkout(request):
 
         #shipping form
         shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
-        return render(request, "payments/checkout.html", {"cart_products":cart_products,"quantity":quantities, "totals":totals, "shipping":shipping, "grand_total":grand_total, "shipping_form":shipping_form})
+        return render(request, "checkout.html", {"cart_products":cart_products,"quantity":quantities, "totals":totals, "shipping":shipping, "grand_total":grand_total, "shipping_form":shipping_form})
     else:
         #checkout as a guest
         shipping_form = ShippingForm(request.POST or None)
-        return render(request, "payments/checkout.html", {"cart_products":cart_products,"quantity":quantities, "totals":totals, "shipping":shipping, "grand_total":grand_total, "shipping_form":shipping_form})
+        return render(request, "checkout.html", {"cart_products":cart_products,"quantity":quantities, "totals":totals, "shipping":shipping, "grand_total":grand_total, "shipping_form":shipping_form})
