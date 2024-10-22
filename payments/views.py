@@ -37,7 +37,7 @@ def orders(request, pk):
                 order.update(shipped=False)
             messages.success(request, "Shipping Status Updated")
             return redirect('shipped_dash')
-        return render(request, "payments/orders.html", {"order":order, "items":items})
+        return render(request, "orders.html", {"order":order, "items":items})
     else:
         messages.success(request, "Access Denied!")
         return redirect('home')
@@ -90,16 +90,16 @@ def shipped_dash(request):
             return redirect('shipped_dash')
 
 
-        return render(request, "payments/shipped_dash.html", {"not_shipped_orders":not_shipped_orders, "shipped_orders":shipped_orders})
+        return render(request, "shipped_dash.html", {"not_shipped_orders":not_shipped_orders, "shipped_orders":shipped_orders})
     else:
         messages.success(request, "Access Denied!")
         return redirect('home')
 
 def payment_success(request):
-    return render(request, "payments/payment_success.html", {})
+    return render(request, "payment_success.html", {})
 
 def payment_failed(request):
-    return render(request, "payments/payment_failed.html", {})
+    return render(request, "payment_failed.html", {})
 
 def billing_info(request):
     if request.POST:
@@ -136,14 +136,14 @@ def billing_info(request):
         if request.user.is_authenticated:
 			# if logged-in
             billing_form = PaymentForm()
-            return render(request, "payments/billing_info.html", {"paypal_form":paypal_form, "cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
+            return render(request, "billing_info.html", {"paypal_form":paypal_form, "cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
         else:
 			# if not logged-in
             billing_form = PaymentForm()
-            return render(request, "payments/billing_info.html", {"paypal_form":paypal_form, "cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
+            return render(request, "billing_info.html", {"paypal_form":paypal_form, "cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
 
         shipping_form = request.POST
-        return render(request, "payments/billing_info.html", {"cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
+        return render(request, "billing_info.html", {"cart_products":cart_products, "quantities":quantites, "totals": totals, "shipping_info":request.POST, "billing_form":billing_form})
     else:
         messages.success(request, "Access Denied!")
         return redirect('home')
@@ -264,8 +264,8 @@ def checkout(request):
 
         #shipping form
         shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
-        return render(request, "payments/checkout.html", {"cart_products":cart_products,"quantity":quantities, "totals":totals, "shipping":shipping, "grand_total":grand_total, "shipping_form":shipping_form})
+        return render(request, "checkout.html", {"cart_products":cart_products,"quantity":quantities, "totals":totals, "shipping":shipping, "grand_total":grand_total, "shipping_form":shipping_form})
     else:
         #checkout as a guest
         shipping_form = ShippingForm(request.POST or None)
-        return render(request, "payments/checkout.html", {"cart_products":cart_products,"quantity":quantities, "totals":totals, "shipping":shipping, "grand_total":grand_total, "shipping_form":shipping_form})
+        return render(request, "checkout.html", {"cart_products":cart_products,"quantity":quantities, "totals":totals, "shipping":shipping, "grand_total":grand_total, "shipping_form":shipping_form})
