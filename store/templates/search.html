@@ -16,7 +16,7 @@
             <div class="col-md-8 col-lg-6">
                 <p align="justify">
                     <br/><br/><br/><br/>
-                    <form method="POST" action="{% url 'search' %}">
+                    <form method="POST" action="{% url 'home' %}">
                         {% csrf_token %}
                         <div class="input-group">
                             <input type="search" name="searched" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>

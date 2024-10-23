@@ -16,19 +16,6 @@ import json
 from cart.cart import Cart
 
 # Create your views here.
-def search(request):
-	# Determine if they filled out the for
-    if request.method == "POST":
-        searched = request.POST['searched']
-        #query the result
-        searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
-        if not searched:
-            return render(request, "search.html", {})
-        else:
-            return render(request, "search.html", {'searched':searched})
-    else:
-        return render(request, "search.html", {})
-
 def update_info(request):
 	if request.user.is_authenticated:
 		# Get Current User
@@ -98,7 +85,16 @@ def category_summary(request):
 
 def home(request):
     products = Product.objects.all()
-    return render(request, 'home.html', {'products':products})
+    if request.method == "POST":
+        searched = request.POST['searched']
+        #query the result
+        searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
+        if not searched:
+            return render(request, 'home.html', {'products':products})
+        else:
+            return render(request, 'home.html', {'products':products, 'searched':searched})
+    else:
+        return render(request, 'home.html', {'products':products})
 
 def about(request):
     return render(request, 'about.html', {})
