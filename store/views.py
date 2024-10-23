@@ -158,6 +158,17 @@ def product_user(request, pk):
     product = Product.objects.get(id=pk)
     return render(request, 'product.html', {'product':product})
 
+def newsletter(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if email:
+            messages.success(request, "Thanks for Subscribing to Our Newsletter!")
+        else:
+            messages.error(request, "Please provide a valid email address.")
+        return redirect('home')
+
+    return render(request, 'home.html')
+
 def category(request, foo):
     #replace hyphens with spaces
     foo = foo.replace("-", " ")

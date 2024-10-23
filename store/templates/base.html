@@ -293,7 +293,8 @@
                             <h5 class="widget-title">Newsletter</h5>
                             <div class="footer-newsletter">
                               <p>Stay updated with our latest products, offers, and exclusive deals. Sign up now!</p>
-                              <form class="news-letter-form">
+                              <form class="news-letter-form" method="POST">
+                                {% csrf_token %}
                                 <input type="email" name="news-email" id="news-email" placeholder="Your email address">
                                 <input type="submit" value="Subscribe">
                               </form>
