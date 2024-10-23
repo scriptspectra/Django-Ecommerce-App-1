@@ -87,14 +87,16 @@ def home(request):
     products = Product.objects.all()
     if request.method == "POST":
         searched = request.POST['searched']
+        not_searched = False
         #query the result
         searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
         if not searched:
-            return render(request, 'home.html', {'products':products})
+            return render(request, 'home.html', {'products':products, 'not_searched':not_searched})
         else:
-            return render(request, 'home.html', {'products':products, 'searched':searched})
+            return render(request, 'home.html', {'products':products, 'searched':searched, 'not_searched':not_searched})
     else:
-        return render(request, 'home.html', {'products':products})
+        not_searched = True
+        return render(request, 'home.html', {'products':products, 'not_searched':not_searched})
 
 def about(request):
     return render(request, 'about.html', {})
