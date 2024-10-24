@@ -259,12 +259,9 @@
                         <center>
                             <h5 class="widget-title">Shop Categories</h5>
                             <ul class="shop-link-list">
-                              <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Electronics</a></li>
-                              <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Fashion</a></li>
-                              <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Home & Kitchen</a></li>
-                              <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Beauty & Health</a></li>
-                              <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Sports & Outdoors</a></li>
-                              <li><a href="#"><i class="fas fa-long-arrow-alt-right"></i>Books & Media</a></li>
+                              <li><a href="{% url 'category' 'Electronics' %}"><i class="fas fa-long-arrow-alt-right"></i>Electronics</a></li>
+                              <li><a href="{% url 'category' 'Novels' %}"><i class="fas fa-long-arrow-alt-right"></i>Novels</a></li>
+                              <li><a href="{% url 'category' 'Programming-Books' %}"><i class="fas fa-long-arrow-alt-right"></i>Programming Books</a></li>
                             </ul>      
                         </center>
                     </div>
